@@ -1,3 +1,5 @@
+package Main.java;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +13,7 @@ public class setFrame extends JFrame {
         JLabel startAmountLabel = new JLabel("Starting Amount:");
         JLabel totalYearLabel = new JLabel("Years Of Investment:");
         JLabel returnRateLabel = new JLabel("Return Rate(%):");
-        JLabel annualIncreaseLabel = new JLabel("Annual Return Rate:");
+        JLabel annualIncreaseLabel = new JLabel("Annual Account Increase:");
         JLabel[] arrLabel = {startAmountLabel, totalYearLabel, returnRateLabel, annualIncreaseLabel};
         for(int i = 0; i < arrLabel.length; i++){
             panel.add(arrLabel[i]);
@@ -50,9 +52,11 @@ public class setFrame extends JFrame {
                     calculateInvestment cc =
                             new calculateInvestment(startingAmount, years, returnRate, yearlyIncrease);
                     cc.outputString(outputWindow);
+                    addChart(cc);
                 }else{
                     errorMessage();
                 }
+
             }catch(Exception ex){
                 errorMessage();
             }
@@ -68,12 +72,20 @@ public class setFrame extends JFrame {
         //this.setLocationRelativeTo(null);
         this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600,300);
+        this.setSize(600,250);
         this.setVisible(true);
     }
 
     public void errorMessage(){
         JOptionPane.showMessageDialog(new JFrame(), "Numbers need to be positive",
                 "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void addChart(calculateInvestment cc){
+        this.setLayout(null);
+        JPanel panel = cc.getChartPanel();
+        panel.setBounds(0,220,600,350);
+        this.setSize(620,620);
+        this.add(panel);
     }
 }

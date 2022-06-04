@@ -1,3 +1,5 @@
+package Main.java;
+
 import javax.swing.*;
 
 public class calculateInvestment {
@@ -6,6 +8,8 @@ public class calculateInvestment {
     private final double returnRate;
     private final double yearlyIncrease;
     private double totalInvestment;
+    private int[] years;
+    private double[] values;
 
 
     public calculateInvestment(double startingAmount,
@@ -19,12 +23,24 @@ public class calculateInvestment {
     }
 
     public void getFinalAmount(){
+        this.years = new int[numberOfYears + 1];
+        this.values = new double[numberOfYears + 1];
+
         totalInvestment += startingAmount;
+        years[0] = 0;
+        values[0] = this.startingAmount;
         for(int i = 0; i < numberOfYears; i++){
+            years[i + 1] = i + 1;
+            values[i + 1] = this.totalInvestment;
             double interest = this.totalInvestment * (returnRate / 100);
             this.totalInvestment += interest;
             this.totalInvestment += yearlyIncrease;
         }
+
+    }
+
+    public JPanel getChartPanel(){
+        return new setChart(years, values);
     }
 
     //outputs the final amount and some extra info to the output window from setFrame class
