@@ -19,10 +19,10 @@ public class calculateInvestment {
         this.returnRate = returnRate;
         this.yearlyIncrease = yearlyIncrease;
         this.totalInvestment = 0; //this variable will be changed to calculate the final amount
-        getFinalAmount();
+        this.totalInvestment = getFinalAmount(this.totalInvestment);
     }
 
-    public void getFinalAmount(){
+    public double getFinalAmount(double totalInvestment){
         this.years = new int[numberOfYears + 1];
         this.values = new double[numberOfYears + 1];
 
@@ -31,12 +31,12 @@ public class calculateInvestment {
         values[0] = this.startingAmount;
         for(int i = 0; i < numberOfYears; i++){
             years[i + 1] = i + 1;
-            values[i + 1] = this.totalInvestment;
-            double interest = this.totalInvestment * (returnRate / 100);
-            this.totalInvestment += interest;
-            this.totalInvestment += yearlyIncrease;
+            values[i + 1] = totalInvestment;
+            double interest = totalInvestment * (returnRate / 100);
+            totalInvestment += interest;
+            totalInvestment += yearlyIncrease;
         }
-
+        return Math.round(totalInvestment * 100.0) / 100.0;
     }
 
     public JPanel getChartPanel(){
