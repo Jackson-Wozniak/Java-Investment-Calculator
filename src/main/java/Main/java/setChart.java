@@ -29,7 +29,7 @@ public class setChart extends JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        chartPanel.setPreferredSize(new Dimension(600,350));
+        chartPanel.setPreferredSize(new Dimension(680,350));
         this.add(chartPanel);
     }
 

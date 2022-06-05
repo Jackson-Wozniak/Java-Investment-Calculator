@@ -31,7 +31,7 @@ public class setFrame extends JFrame {
         }
 
         JTextArea outputWindow = new JTextArea();
-        outputWindow.setBounds(320,10,250,150);
+        outputWindow.setBounds(320,10,340,150);
         outputWindow.setEditable(false);
         outputWindow.setFocusable(false);
         outputWindow.setFont(font);
@@ -48,6 +48,19 @@ public class setFrame extends JFrame {
                 int years = Integer.parseInt(totalYearText.getText());
                 double returnRate = Double.parseDouble(returnRateText.getText());
                 double yearlyIncrease = Double.parseDouble(annualIncreaseText.getText());
+
+                if(years > 100){
+                    oneHundredYearLimitError();
+                    return;
+                }
+                if(startingAmount > 1000000000 || yearlyIncrease > 1000000000){
+                    inputTooLargeError();
+                    return;
+                }
+                if(returnRate > 1000){
+                    invalidInterestRateError();
+                    return;
+                }
                 if(yearlyIncrease >= 0 && years >= 0 && startingAmount >= 0 && returnRate >= 0) {
                     calculateInvestment cc =
                             new calculateInvestment(startingAmount, years, returnRate, yearlyIncrease);
@@ -56,14 +69,13 @@ public class setFrame extends JFrame {
                 }else{
                     errorMessage();
                 }
-
             }catch(Exception ex){
                 errorMessage();
             }
         });
 
         JButton exitButton = new JButton("Exit");
-        exitButton.setBounds(405, 175, 80,30);
+        exitButton.setBounds(455, 175, 80,30);
         exitButton.setFocusable(false);
         panel.add(exitButton);
         exitButton.addActionListener(e -> System.exit(0));
@@ -72,8 +84,24 @@ public class setFrame extends JFrame {
         //this.setLocationRelativeTo(null);
         this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600,250);
+        this.setSize(700,250);
         this.setVisible(true);
+    }
+
+    public void oneHundredYearLimitError(){
+        JOptionPane.showMessageDialog(new JFrame(), "Investment must be under 100 years",
+                "Invalid timeframe", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void inputTooLargeError(){
+        JOptionPane.showMessageDialog(new JFrame(), "Yearly and initial" +
+                        "investment must be under $1 billion in value",
+                "Invalid investment amount", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void invalidInterestRateError(){
+        JOptionPane.showMessageDialog(new JFrame(), "Return rate must be under %1000",
+                "Invalid return rate", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void errorMessage(){
@@ -84,8 +112,8 @@ public class setFrame extends JFrame {
     public void addChart(calculateInvestment cc){
         this.setLayout(null);
         JPanel panel = cc.getChartPanel();
-        panel.setBounds(0,220,600,350);
-        this.setSize(620,620);
+        panel.setBounds(0,220,680,350);
+        this.setSize(700,620);
         this.add(panel);
     }
 }
