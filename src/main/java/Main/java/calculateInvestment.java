@@ -49,6 +49,9 @@ public class calculateInvestment {
         outputWindow.setText("Final Amount: $" + Math.round(this.totalInvestment * 100.0) / 100.0);
         outputWindow.append("\n\nInitial Balance: $" + Math.round(this.startingAmount * 100.0) / 100.0);
         double interest = this.totalInvestment - this.startingAmount;
+        double addedAmount = this.yearlyIncrease * this.numberOfYears;
+        interest -= addedAmount;
+        outputWindow.append("\nTotal Amount Added: $" + Math.round(addedAmount * 100.0) / 100.0);
         outputWindow.append("\nTotal Interest Earned: $" + Math.round(interest * 100.0) / 100.0);
         outputWindow.append("\nTotal Years: " + this.numberOfYears);
 
