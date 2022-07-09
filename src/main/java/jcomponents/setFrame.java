@@ -3,8 +3,11 @@ package jcomponents;
 import customcolors.CustomColors;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+
+/*
+    Image link : http://clipart-library.com/investment-cliparts.html
+ */
 
 public class setFrame extends JFrame {
     JPanel panel;
