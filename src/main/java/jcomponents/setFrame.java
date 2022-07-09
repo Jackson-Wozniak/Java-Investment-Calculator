@@ -3,6 +3,7 @@ package jcomponents;
 import customcolors.CustomColors;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /*
@@ -31,30 +32,29 @@ public class setFrame extends JFrame {
                 {startAmountText, totalYearText, returnRateText, annualIncreaseText};
         for(int i = 0; i < arrText.length; i++){
             panel.add(arrText[i]);
-            arrText[i].setBounds(160, 10 + (i * 40), 150, 30);
+            arrText[i].setBounds(160, 10 + (i * 50), 150, 30);
             arrText[i].setBackground(CustomColors.dark);
             arrText[i].setForeground(CustomColors.light);
             arrText[i].setCaretColor(CustomColors.light);
-            //arrText[i].setBorder(new LineBorder(CustomColors.teal, 1));
-            arrText[i].setBorder(null);
+            arrText[i].setBorder(new LineBorder(CustomColors.teal.darker(), 1));
+            //arrText[i].setBorder(null);
         }
 
         JTextArea outputWindow = new JTextArea();
-        outputWindow.setBounds(320,10,340,150);
+        outputWindow.setBounds(340,10,350,180);
         outputWindow.setEditable(false);
         outputWindow.setFocusable(false);
         outputWindow.setForeground(CustomColors.light);
         outputWindow.setFont(font);
-        outputWindow.setBorder(null);
+        outputWindow.setBorder(new LineBorder(CustomColors.teal.darker(),1));
         outputWindow.setBackground(CustomColors.dark);
         panel.add(outputWindow);
 
         JButton calculateButton = new JButton("Calculate");
-        calculateButton.setBounds(75,175,100,30);
-        calculateButton.setFocusable(false);
+        calculateButton.setBounds(185,215,100,30);
         calculateButton.setFocusable(false);
         calculateButton.setBackground(CustomColors.dark);
-        calculateButton.setBorder(null);
+        calculateButton.setBorder(new LineBorder(CustomColors.light.darker(),1));
         calculateButton.setForeground(CustomColors.teal);
         panel.add(calculateButton);
         calculateButton.addActionListener(e -> {
@@ -90,18 +90,18 @@ public class setFrame extends JFrame {
         });
 
         JButton exitButton = new JButton("Exit");
-        exitButton.setBounds(455, 175, 80,30);
+        exitButton.setBounds(475, 215, 80,30);
         exitButton.setFocusable(false);
         panel.add(exitButton);
         exitButton.setBackground(CustomColors.dark);
-        exitButton.setBorder(null);
+        exitButton.setBorder(new LineBorder(CustomColors.light.darker(),1));
         exitButton.setForeground(CustomColors.teal);
         exitButton.addActionListener(e -> System.exit(0));
 
         this.setResizable(false);
         this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(690,250);
+        this.setSize(720,300);
         this.setVisible(true);
     }
 
@@ -114,7 +114,7 @@ public class setFrame extends JFrame {
         for(int i = 0; i < arrLabel.length; i++){
             panel.add(arrLabel[i]);
             arrLabel[i].setForeground(CustomColors.light);
-            arrLabel[i].setBounds(10, 10 + (i  * 40), 150, 30);
+            arrLabel[i].setBounds(10, 10 + (i  * 50), 150, 30);
         }
     }
 
@@ -142,9 +142,9 @@ public class setFrame extends JFrame {
     public void addChart(calculateInvestment cc){
         this.setLayout(null);
         JPanel panel = cc.getChartPanel();
-        panel.setBounds(0,200,680,380);
+        panel.setBounds(0,260,710,380);
         panel.setBackground(CustomColors.darker);
-        this.setSize(690,610);
+        this.setSize(720,660);
         this.add(panel);
     }
 }

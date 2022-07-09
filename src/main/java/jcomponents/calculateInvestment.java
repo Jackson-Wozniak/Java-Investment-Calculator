@@ -1,8 +1,5 @@
 package jcomponents;
 
-import customcolors.CustomColors;
-import jcomponents.setChart;
-
 import javax.swing.*;
 
 public class calculateInvestment {

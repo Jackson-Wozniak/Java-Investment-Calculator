@@ -4,9 +4,7 @@ import customcolors.CustomColors;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -15,6 +13,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class setChart extends JPanel {
@@ -32,6 +31,7 @@ public class setChart extends JPanel {
         chartPanel.setPreferredSize(new Dimension(680,350));
         chartPanel.setBackground(CustomColors.darker);
         chart.setBackgroundPaint(CustomColors.darker);
+        chartPanel.setBorder(new LineBorder(CustomColors.dark, 1));
         chart.getTitle().setPaint(CustomColors.light);
         this.add(chartPanel);
     }
