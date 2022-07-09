@@ -1,5 +1,6 @@
 package Main.java;
 
+import jcomponents.setChart;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;

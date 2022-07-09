@@ -1,9 +1,12 @@
-package Main.java;
+package jcomponents;
 
+import customcolors.CustomColors;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -26,9 +29,10 @@ public class setChart extends JPanel {
         JFreeChart chart = createChart(dataset);
 
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
         chartPanel.setPreferredSize(new Dimension(680,350));
+        chartPanel.setBackground(CustomColors.darker);
+        chart.setBackgroundPaint(CustomColors.darker);
+        chart.getTitle().setPaint(CustomColors.light);
         this.add(chartPanel);
     }
 
@@ -57,23 +61,34 @@ public class setChart extends JPanel {
                 true,
                 false
         );
-
+        chart.getLegend().setBackgroundPaint(CustomColors.darker);
+        chart.getLegend().setItemPaint(CustomColors.light);
 
         XYPlot plot = chart.getXYPlot();
 
         var renderer = new XYLineAndShapeRenderer();
-        Color darkRed = new Color(150,0,0);
-        renderer.setSeriesPaint(0, darkRed);
+        renderer.setSeriesPaint(0, CustomColors.teal);
         renderer.setSeriesStroke(0, new BasicStroke(2.0f));
 
         plot.setRenderer(renderer);
-        plot.setBackgroundPaint(Color.white);
+        plot.setBackgroundPaint(CustomColors.light);
+
+
+        plot.getRangeAxis().setLabelPaint(CustomColors.light);
+        plot.getDomainAxis().setLabelPaint(CustomColors.light);
+        plot.getRangeAxis().setTickLabelPaint(CustomColors.light);
+        plot.getDomainAxis().setTickLabelPaint(CustomColors.light);
+
 
         plot.setRangeGridlinesVisible(true);
-        plot.setRangeGridlinePaint(Color.BLACK);
+        plot.setRangeGridlinePaint(CustomColors.light);
 
         plot.setDomainGridlinesVisible(true);
-        plot.setDomainGridlinePaint(Color.BLACK);
+        plot.setDomainGridlinePaint(CustomColors.light);
+        //plot.setRangeTickBandPaint(CustomColors.dark);
+
+        chart.setBorderPaint(CustomColors.teal);
+        chart.getPlot().setBackgroundPaint(CustomColors.darker);
 
         chart.getLegend().setFrame(BlockBorder.NONE);
         return chart;
