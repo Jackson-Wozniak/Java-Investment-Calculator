@@ -4,24 +4,31 @@ import customcolors.CustomColors;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 /*
     Image link : http://clipart-library.com/investment-cliparts.html
  */
 
-public class setFrame extends JFrame {
-    JPanel panel;
+public class SetFrame extends JFrame {
 
-    public setFrame(){
+    JPanel panel;
+    private static final Font font = new Font("geneva", Font.PLAIN, 15);
+    private static final Font outputFont = new Font("geneva", Font.BOLD, 17);
+
+    public SetFrame(){
         this.setTitle("Investment Calculator");
+        this.setLayout(null);
+
         ImageIcon icon = new ImageIcon("img.png");
         this.setIconImage(icon.getImage());
+
         panel = new JPanel();
         panel.setLayout(null);
-        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
         panel.setBackground(CustomColors.darker);
-
         addLabels();
 
         JTextField startAmountText = new JTextField();
@@ -32,30 +39,26 @@ public class setFrame extends JFrame {
                 {startAmountText, totalYearText, returnRateText, annualIncreaseText};
         for(int i = 0; i < arrText.length; i++){
             panel.add(arrText[i]);
-            arrText[i].setBounds(160, 10 + (i * 50), 150, 30);
+            arrText[i].setBounds(170, 10 + (i * 50), 150, 30);
             arrText[i].setBackground(CustomColors.dark);
             arrText[i].setForeground(CustomColors.light);
             arrText[i].setCaretColor(CustomColors.light);
             arrText[i].setBorder(new LineBorder(CustomColors.teal.darker(), 1));
-            //arrText[i].setBorder(null);
         }
 
-        JTextArea outputWindow = new JTextArea();
-        outputWindow.setBounds(340,10,350,180);
-        outputWindow.setEditable(false);
-        outputWindow.setFocusable(false);
-        outputWindow.setForeground(CustomColors.light);
-        outputWindow.setFont(font);
-        outputWindow.setBorder(new LineBorder(CustomColors.teal.darker(),1));
-        outputWindow.setBackground(CustomColors.dark);
+        JTextPane outputWindow = new JTextPane();
+        outputWindow.setBounds(380,10,350,180);
+        StyledDocument documentStyle = outputWindow.getStyledDocument();
+        SimpleAttributeSet centerAttribute = new SimpleAttributeSet();
+        StyleConstants.setAlignment(centerAttribute, StyleConstants.ALIGN_CENTER);
+        documentStyle.setParagraphAttributes(0,
+                documentStyle.getLength(), centerAttribute, false);
+        setOutputWindowCustomization(outputWindow);
         panel.add(outputWindow);
 
         JButton calculateButton = new JButton("Calculate");
-        calculateButton.setBounds(185,215,100,30);
-        calculateButton.setFocusable(false);
-        calculateButton.setBackground(CustomColors.dark);
-        calculateButton.setBorder(new LineBorder(CustomColors.light.darker(),1));
-        calculateButton.setForeground(CustomColors.teal);
+        calculateButton.setBounds(190,215,100,30);
+        setButtonCustomization(calculateButton);
         panel.add(calculateButton);
         calculateButton.addActionListener(e -> {
             try{
@@ -77,10 +80,10 @@ public class setFrame extends JFrame {
                     return;
                 }
                 if(yearlyIncrease >= 0 && years >= 0 && startingAmount >= 0 && returnRate >= 0) {
-                    calculateInvestment cc =
-                            new calculateInvestment(startingAmount, years, returnRate, yearlyIncrease);
-                    cc.outputString(outputWindow);
-                    addChart(cc);
+                    CalculateInvestment calculateInvestment =
+                            new CalculateInvestment(startingAmount, years + 1, returnRate, yearlyIncrease);
+                    calculateInvestment.outputString(outputWindow);
+                    addChart(calculateInvestment);
                 }else{
                     errorMessage();
                 }
@@ -90,18 +93,18 @@ public class setFrame extends JFrame {
         });
 
         JButton exitButton = new JButton("Exit");
-        exitButton.setBounds(475, 215, 80,30);
-        exitButton.setFocusable(false);
+        exitButton.setBounds(515, 215, 80,30);
+        setButtonCustomization(exitButton);
         panel.add(exitButton);
-        exitButton.setBackground(CustomColors.dark);
-        exitButton.setBorder(new LineBorder(CustomColors.light.darker(),1));
-        exitButton.setForeground(CustomColors.teal);
         exitButton.addActionListener(e -> System.exit(0));
 
+        panel.setBounds(265,10, 760, 280);
+
+        this.getContentPane().setBackground(CustomColors.darker);
         this.setResizable(false);
         this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(720,300);
+        this.setSize(1280,720);
         this.setVisible(true);
     }
 
@@ -114,37 +117,52 @@ public class setFrame extends JFrame {
         for(int i = 0; i < arrLabel.length; i++){
             panel.add(arrLabel[i]);
             arrLabel[i].setForeground(CustomColors.light);
+            arrLabel[i].setFont(font);
             arrLabel[i].setBounds(10, 10 + (i  * 50), 150, 30);
         }
     }
 
-    public void oneHundredYearLimitError(){
+    public static void setButtonCustomization(JButton button){
+        button.setFocusable(false);
+        button.setBackground(CustomColors.dark);
+        button.setBorder(new LineBorder(CustomColors.light.darker(),1));
+        button.setForeground(CustomColors.teal);
+    }
+
+    public static void setOutputWindowCustomization(JTextPane outputWindow){
+        outputWindow.setEditable(false);
+        outputWindow.setFocusable(false);
+        outputWindow.setForeground(CustomColors.light);
+        outputWindow.setFont(outputFont);
+        outputWindow.setBorder(new LineBorder(CustomColors.teal.darker(),1));
+        outputWindow.setBackground(CustomColors.dark);
+    }
+
+    public static void oneHundredYearLimitError(){
         JOptionPane.showMessageDialog(new JFrame(), "Investment must be under 100 years",
                 "Invalid timeframe", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void inputTooLargeError(){
+    public static void inputTooLargeError(){
         JOptionPane.showMessageDialog(new JFrame(), "Yearly and initial" +
                         "investment must be under $1 billion in value",
                 "Invalid investment amount", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void invalidInterestRateError(){
+    public static void invalidInterestRateError(){
         JOptionPane.showMessageDialog(new JFrame(), "Return rate must be under %1000",
                 "Invalid return rate", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void errorMessage(){
+    public static void errorMessage(){
         JOptionPane.showMessageDialog(new JFrame(), "Numbers need to be positive",
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void addChart(calculateInvestment cc){
-        this.setLayout(null);
-        JPanel panel = cc.getChartPanel();
-        panel.setBounds(0,260,710,380);
+    public void addChart(CalculateInvestment calculateInvestment){
+        JPanel panel = calculateInvestment.getChartPanel();
+        panel.setBounds(260,290,740,375);
         panel.setBackground(CustomColors.darker);
-        this.setSize(720,660);
         this.add(panel);
     }
 }

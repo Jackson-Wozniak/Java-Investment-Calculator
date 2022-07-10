@@ -1,6 +1,4 @@
-import jcomponents.setFrame;
-
-import javax.swing.*;
+import jcomponents.SetFrame;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,6 +9,6 @@ public class Main {
         catch (Exception e) {
             e.printStackTrace();
         }*/
-        new setFrame();
+        new SetFrame();
     }
 }

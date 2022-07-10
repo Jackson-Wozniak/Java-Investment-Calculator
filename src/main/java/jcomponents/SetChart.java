@@ -16,33 +16,34 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class setChart extends JPanel {
+public class SetChart extends JPanel {
 
-    int[] years;
-    double[] values;
+    private final int[] years;
+    private final double[] values;
 
-    public setChart(int[] years, double[] values){
+    public SetChart(int[] years, double[] values){
         this.years = years;
         this.values = values;
+
         XYDataset dataset = createDataset();
+
         JFreeChart chart = createChart(dataset);
+        chart.getTitle().setPaint(CustomColors.light);
+        chart.setBackgroundPaint(CustomColors.darker);
 
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(680,350));
+        chartPanel.setPreferredSize(new Dimension(740,370));
         chartPanel.setBackground(CustomColors.darker);
-        chart.setBackgroundPaint(CustomColors.darker);
         chartPanel.setBorder(new LineBorder(CustomColors.dark, 1));
-        chart.getTitle().setPaint(CustomColors.light);
+
         this.add(chartPanel);
     }
 
     private XYDataset createDataset() {
-
         XYSeries xy = new XYSeries("Account Balance");
         for(int i = 0; i < this.years.length; i++){
             xy.add(this.years[i], this.values[i]);
         }
-
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(xy);
 
@@ -50,7 +51,6 @@ public class setChart extends JPanel {
     }
 
     private JFreeChart createChart(XYDataset dataset) {
-
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Investment Chart",
                 "Years",
@@ -61,9 +61,6 @@ public class setChart extends JPanel {
                 true,
                 false
         );
-        chart.getLegend().setBackgroundPaint(CustomColors.darker);
-        chart.getLegend().setItemPaint(CustomColors.light);
-
         XYPlot plot = chart.getXYPlot();
 
         var renderer = new XYLineAndShapeRenderer();
@@ -73,24 +70,22 @@ public class setChart extends JPanel {
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(CustomColors.light);
 
-
         plot.getRangeAxis().setLabelPaint(CustomColors.light);
-        plot.getDomainAxis().setLabelPaint(CustomColors.light);
         plot.getRangeAxis().setTickLabelPaint(CustomColors.light);
-        plot.getDomainAxis().setTickLabelPaint(CustomColors.light);
-
-
         plot.setRangeGridlinesVisible(true);
         plot.setRangeGridlinePaint(CustomColors.light);
 
+        plot.getDomainAxis().setLabelPaint(CustomColors.light);
+        plot.getDomainAxis().setTickLabelPaint(CustomColors.light);
         plot.setDomainGridlinesVisible(true);
         plot.setDomainGridlinePaint(CustomColors.light);
-        //plot.setRangeTickBandPaint(CustomColors.dark);
 
+        chart.getLegend().setBackgroundPaint(CustomColors.darker);
+        chart.getLegend().setItemPaint(CustomColors.light);
         chart.setBorderPaint(CustomColors.teal);
         chart.getPlot().setBackgroundPaint(CustomColors.darker);
-
         chart.getLegend().setFrame(BlockBorder.NONE);
+
         return chart;
     }
 

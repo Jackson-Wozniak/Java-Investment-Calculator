@@ -1,6 +1,6 @@
 package Main.java;
 
-import jcomponents.setChart;
+import jcomponents.SetChart;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -13,7 +13,8 @@ class setChartTest {
     void checkJPanelSize(){
         int[] years = {1,2,3,4};
         double[] values = {1,2,3,4};
-        JPanel panel = new setChart(years, values);
+
+        JPanel panel = new SetChart(years, values);
         assertNotNull(panel);
     }
 
