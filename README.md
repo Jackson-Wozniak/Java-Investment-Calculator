@@ -14,5 +14,6 @@ Current Investment Limits:
 ---
 Screenshots
 
-![Screenshot (12)](https://user-images.githubusercontent.com/105665813/178090782-b20a0875-bf4b-4d61-acc7-ae48688c342f.png)
+![Screenshot (13)](https://user-images.githubusercontent.com/105665813/178130046-adea72e1-5258-47ed-b604-da16f1d5f9d8.png)
+
 
