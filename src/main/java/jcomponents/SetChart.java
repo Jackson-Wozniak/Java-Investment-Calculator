@@ -7,10 +7,17 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.renderer.category.AreaRenderer;
+import org.jfree.chart.renderer.xy.*;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.w3c.dom.Text;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -28,13 +35,23 @@ public class SetChart extends JPanel {
         XYDataset dataset = createDataset();
 
         JFreeChart chart = createChart(dataset);
-        chart.getTitle().setPaint(CustomColors.light);
         chart.setBackgroundPaint(CustomColors.darker);
+        chart.setTitle("Portfolio Growth");
+        TextTitle subtitle = new TextTitle(
+                "Final Amount: $" + Math.round(values[values.length - 1] * 100.00) / 100.00,
+                new Font(Font.SANS_SERIF, Font.BOLD, 12),
+                CustomColors.light,
+                RectangleEdge.TOP,
+                HorizontalAlignment.CENTER,
+                VerticalAlignment.TOP,
+                RectangleInsets.ZERO_INSETS);
+        chart.addSubtitle(subtitle);
+        chart.getTitle().setPaint(CustomColors.teal);
 
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(740,370));
         chartPanel.setBackground(CustomColors.darker);
-        chartPanel.setBorder(new LineBorder(CustomColors.dark, 1));
+        chartPanel.setBorder(new LineBorder(CustomColors.darkest, 1));
 
         this.add(chartPanel);
     }
@@ -52,9 +69,9 @@ public class SetChart extends JPanel {
 
     private JFreeChart createChart(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Investment Chart",
+                "",
                 "Years",
-                "Total Investment Value ($)",
+                "Investment Value ($)",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,
@@ -63,7 +80,11 @@ public class SetChart extends JPanel {
         );
         XYPlot plot = chart.getXYPlot();
 
-        var renderer = new XYLineAndShapeRenderer();
+        //var renderer = new XYLineAndShapeRenderer();
+        XYAreaRenderer renderer = new XYAreaRenderer();
+        renderer.setOutline(true);
+        renderer.setDefaultOutlinePaint(CustomColors.dark);
+
         renderer.setSeriesPaint(0, CustomColors.teal);
         renderer.setSeriesStroke(0, new BasicStroke(2.0f));
 
@@ -73,12 +94,12 @@ public class SetChart extends JPanel {
         plot.getRangeAxis().setLabelPaint(CustomColors.light);
         plot.getRangeAxis().setTickLabelPaint(CustomColors.light);
         plot.setRangeGridlinesVisible(true);
-        plot.setRangeGridlinePaint(CustomColors.light);
+        plot.setRangeGridlinePaint(CustomColors.dark);
 
         plot.getDomainAxis().setLabelPaint(CustomColors.light);
         plot.getDomainAxis().setTickLabelPaint(CustomColors.light);
         plot.setDomainGridlinesVisible(true);
-        plot.setDomainGridlinePaint(CustomColors.light);
+        plot.setDomainGridlinePaint(CustomColors.dark);
 
         chart.getLegend().setBackgroundPaint(CustomColors.darker);
         chart.getLegend().setItemPaint(CustomColors.light);

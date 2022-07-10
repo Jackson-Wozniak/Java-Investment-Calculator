@@ -17,7 +17,7 @@ public class SetFrame extends JFrame {
 
     JPanel panel;
     private static final Font font = new Font("geneva", Font.PLAIN, 15);
-    private static final Font outputFont = new Font("geneva", Font.BOLD, 17);
+    private static final Font outputFont = new Font("geneva", Font.PLAIN, 16);
 
     public SetFrame(){
         this.setTitle("Investment Calculator");
@@ -40,7 +40,7 @@ public class SetFrame extends JFrame {
         for(int i = 0; i < arrText.length; i++){
             panel.add(arrText[i]);
             arrText[i].setBounds(170, 10 + (i * 50), 150, 30);
-            arrText[i].setBackground(CustomColors.dark);
+            arrText[i].setBackground(CustomColors.dark.darker());
             arrText[i].setForeground(CustomColors.light);
             arrText[i].setCaretColor(CustomColors.light);
             arrText[i].setBorder(new LineBorder(CustomColors.teal.darker(), 1));
@@ -71,7 +71,7 @@ public class SetFrame extends JFrame {
                     oneHundredYearLimitError();
                     return;
                 }
-                if(startingAmount > 1000000000 || yearlyIncrease > 1000000000){
+                if(startingAmount > 1000000000.0 || yearlyIncrease > 1000000000.0){
                     inputTooLargeError();
                     return;
                 }
@@ -125,7 +125,8 @@ public class SetFrame extends JFrame {
     public static void setButtonCustomization(JButton button){
         button.setFocusable(false);
         button.setBackground(CustomColors.dark);
-        button.setBorder(new LineBorder(CustomColors.light.darker(),1));
+        //other border: new LineBorder(CustomColors.light.darker(),1)
+        button.setBorder(null);
         button.setForeground(CustomColors.teal);
     }
 
@@ -135,7 +136,7 @@ public class SetFrame extends JFrame {
         outputWindow.setForeground(CustomColors.light);
         outputWindow.setFont(outputFont);
         outputWindow.setBorder(new LineBorder(CustomColors.teal.darker(),1));
-        outputWindow.setBackground(CustomColors.dark);
+        outputWindow.setBackground(CustomColors.dark.darker());
     }
 
     public static void oneHundredYearLimitError(){
